@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 将deptDao装配到容器中 -->
+    <bean id="deptDao" class="cn.itcast.dao.impl.DeptDaoImpl"></bean>
+<!--    <bean id="deptDao2" class="cn.itcast.dao.impl.DeptDaoImpl"></bean>-->
+
+    <!-- 手动装配 -->
+<!--    <bean id="deptService" class="cn.itcast.service.impl.DeptServiceImpl">-->
+<!--        <property name="deptDao" ref="deptDao"></property>-->
+<!--    </bean>-->
+
+    <!-- 自动装配 -->
+    <!-- byName:对象中属性名称与容器中的beanId进行匹配，如果属性名与beanId数值一致，则自动装配成功 -->
+<!--    <bean id="deptService" class="cn.itcast.service.impl.DeptServiceImpl" autowire="byName"></bean>-->
+    <!-- byType:对象中属性类型与容器中class进行匹配，如果唯一匹配则自动装配成功 -->
+    <bean id="deptService" class="cn.itcast.service.impl.DeptServiceImpl" autowire="byType"></bean>
+
+
+<!--    基于xml自动装配，底层使用set注入
+        最终：不建议使用byName、byType，建议使用注解方式自动装配
+-->
+</beans>

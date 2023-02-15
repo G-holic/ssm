@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>消息转换器</title>
+</head>
+<body>
+<h3>测试请求体【@RequestBody】</h3>
+<form th:action="@{/testRequestBody}" method="post">
+    LastName: <input type="text" name="lstName"><br>
+    Email: <input type="text" name="email"><br>
+    <input type="submit" value="提交">
+</form>
+<h3>测试请求体【HttpEntity】</h3>
+<form th:action="@{/testHttpEntity}" method="post">
+    LastName: <input type="text" name="lstName"><br>
+    Email: <input type="text" name="email"><br>
+    <input type="submit" value="提交">
+</form>
+
+<h3>测试响应报文【@ResponseBody】</h3>
+<a th:href="@{/testResponseBody}">测试@ResopnseBody</a>
+
+<h3>测试响应报文【@ResponseBody】处理JSON数据</h3>
+<a th:href="@{/testJson}">测试@ResopnseBody处理JSON</a>
+
+</body>
+</html>

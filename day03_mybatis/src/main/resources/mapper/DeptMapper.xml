@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.DeptMapper">
+    <select id="selectDeptByDeptId" resultType="dept">
+        select
+            dept_id,
+            dept_name
+        from
+            tbl_dept
+        where
+            dept_id=#{deptId}
+    </select>
+
+    <resultMap id="deptAndEmpResultMap" type="dept">
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+        <collection property="empList"
+                    ofType="cn.itcast.mybatis.pojo.Employee">
+            <id property="id" column="id"></id>
+            <result property="lastName" column="last_name"></result>
+            <result property="email" column="email"></result>
+            <result property="salary" column="salary"></result>
+        </collection>
+    </resultMap>
+    <select id="selectDeptAndEmpByDeptId" resultMap="deptAndEmpResultMap">
+        SELECT
+            e.`id`,
+            e.`email`,
+            e.`last_name`,
+            e.`salary`,
+            d.`dept_id`,
+            d.`dept_name`
+        FROM
+            tbl_employee e
+        INNER JOIN
+            tbl_dept d
+        ON
+            e.`dept_id` = d.`dept_id`
+        AND
+            d.`dept_id`=#{deptId}
+    </select>
+
+
+    <!-- 分部查询 -->
+    <!-- 1.通过部门id获取部门信息 -->
+    <!-- 2.通过部门id获取员工信息  -->
+    <resultMap id="deptAndEmpResultMapStep" type="dept">
+<!--  将多个参数封装成Map来尽心传递，{k1=v1,k2=v2....}-->
+        <id property="deptId" column="dept_id"></id>
+        <result property="deptName" column="dept_name"></result>
+        <collection property="empList"
+                    select="cn.itcast.mybatis.mapper.EmployeeMapper.selectEmpByDeptId"
+                    column="{dId=dept_id}"
+
+                    fetchType="lazy"
+
+        >
+
+        </collection>
+    </resultMap>
+    
+    <select id="selectDeptAndEmpByDeptIdStep" resultMap="deptAndEmpResultMapStep">
+        select
+            dept_id,
+            dept_name
+        from
+            tbl_dept
+        where
+            dept_id = #{dept_id}
+    </select>
+
+
+</mapper>

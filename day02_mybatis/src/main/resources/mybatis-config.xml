@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--    <properties >-->
+    <!--        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+    <!--    </properties>-->
+    <!-- 加载外部属性文件-->
+    <properties resource="db.properties"></properties>
+
+    <!-- 开启驼峰式自动映射 -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!-- 类型别名 -->
+    <typeAliases>
+        <!-- 为指定的类型定义别名-->
+        <!--  <typeAlias type="cn.itcast.mybatis.pojo.Employee" alias="employee"></typeAlias>-->
+        <!-- 为指定包下所有的类定义别名（默认将类名作为别名，不区分大小写【推荐使用小写】）-->
+        <package name="cn.itcast.mybatis.pojo"></package>
+    </typeAliases>
+
+    <!-- 设置数据库连接环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--                <property name="driver" value="${driver}"/>-->
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <!--    有警告      <property name="url" value="jdbc:mysql://localhost:3306/db20230112?serverTimezone=UTC"/>-->
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 设置映射文件的路径-->
+        <mapper resource="mapper/EmployeeMapper.xml"/>
+
+        <!-- 要求：接口的包名与映射文件的包名需要一致-->
+        <!--  <package name="mapper"/>-->
+    </mappers>
+</configuration>

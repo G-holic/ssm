@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 将对象装配到IOC容器中-->
+    <bean id="stuLisi" class="cn.itcast.spring.pojo.Student">
+        <property name="stuId" value="101"></property>
+        <property name="stuName" >
+            <value>lisi</value>
+        </property>
+    </bean>
+    <bean id="stuWangwu" class="cn.itcast.spring.pojo.Student">
+        <property name="stuId" value="101"></property>
+        <property name="stuName" >
+            <value><![CDATA[<<wangwu>>]]></value>
+        </property>
+    </bean>
+
+    <bean id="stuZhaoliu" class="cn.itcast.spring.pojo.Student">
+        <constructor-arg name="stuId" value="105"></constructor-arg>
+        <constructor-arg name="stuName" value="zhaoliu"></constructor-arg>
+    </bean>
+
+    <bean id="stuXiaoer"
+          class="cn.itcast.spring.pojo.Student"
+          p:stuId="104"
+          p:stuName="xiaoer"
+        >
+    </bean>
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:contex="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!-- 开启组件扫描
+                base-package:设置扫描注解包名【当前包及其子包】
+    -->
+    <contex:component-scan base-package="cn.itcast"></contex:component-scan>
+
+
+<!--    <bean id="deptDao" class="cn.itcast.dao.impl.DeptDaoImpl"></bean>-->
+<!--    <bean id="deptService" class="cn.itcast.service.impl.DeptServiceImpl" autowire="byType">-->
+<!--        <property name="deptDao" ref="deptDao"></property>-->
+<!--    </bean>-->
+
+    <!--【包含扫描】   假设：环境中共有100个包，只想扫描20/100 -->
+<!--    <context:component-scan base-package="cn.itcast.dao,cn.itcast.service"></context:component-scan>-->
+<!--    <context:component-scan base-package="cn.itcast" use-default-filters="false">-->
+<!--        <contex:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
+<!--        <contex:include-filter type="assignable" expression="cn.itcast.service.impl.DeptServiceImpl"/>-->
+<!--    </context:component-scan>-->
+
+    <!--【排除扫描】   假设：环境中共有100个包，不想扫描2/100 -->
+<!--    <contex:component-scan base-package="cn.itcast">-->
+<!--        <contex:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+<!--        <contex:exclude-filter type="assignable" expression="cn.itcast.controller.DeptController"/>-->
+<!--    </contex:component-scan>-->
+</beans>

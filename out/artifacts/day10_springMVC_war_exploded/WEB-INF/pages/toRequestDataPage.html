@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>处理请求数据</title>
+</head>
+<body>
+
+<h2>测试SpringMVC处理请求数据</h2>
+<h3>处理请求参数</h3><br>
+<a th:href="@{/requestParam1(sName='zs',stuAge=18)}">测试处理请求参数1</a>
+<br>
+
+<form th:action="@{/saveEmp}" method="post">
+    id:<input type="text" name="id"><br>
+    lastName:<input type="text" name="lastName"><br>
+    email:<input type="text" name="email"><br>
+    salary:<input type="text" name="salary"><br>
+    <input type="submit" value="添加员工信息">
+</form><br>
+
+<h3>处理请求头</h3>
+<a th:href="@{/testGetHeader}">测试获取请求头信息</a><br>
+
+<h3>处理Cookie数据</h3>
+<a th:href="@{/setCookie}">设置Cookie信息</a><br>
+<a th:href="@{/getCookie}">获取Cookie信息</a><br>
+
+<h3>使用原生Servlet-API</h3>
+<a th:href="@{/userRequestObject}">使用Request</a>
+</body>
+</html>

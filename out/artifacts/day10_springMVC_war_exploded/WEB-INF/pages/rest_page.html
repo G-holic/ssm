@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>REST风格CRUD练习</title>
+</head>
+<body>
+
+<h2>REST风格CRUD练习</h2><br>
+<h3>增加员工信息</h3>
+<form th:action="@{/emp}" method="post">
+    <input type="submit" value="添加员工信息">
+</form><br>
+
+<h3>查询员工信息</h3><br>
+<a th:href="@{/emp/1001}">通过员工id查询员工信息</a><br>
+
+<h3>修改员工信息-PUT方式提交</h3><br>
+<form th:action="@{/emp}" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="submit" value="修改员工信息">
+</form><br>
+
+<h3>删除员工信息-DELETE方式提交</h3><br>
+<form th:action="@{/emp/1001}" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="删除员工信息">
+</form>
+
+</body>
+</html>

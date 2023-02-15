@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
+    <!-- 磁盘保存路径 -->
+    <diskStore path="C:\mybatis\ehcache" />
+
+    <defaultCache
+            maxElementsInMemory="512"
+            maxElementsOnDisk="10000000"
+            eternal="false"
+            overflowToDisk="true"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </defaultCache>
+</ehcache>
+<!--
+属性说明：
+    diskStore:指定数据在磁盘中的存储位置。
+    以下属性是必须的：
+    maxELementsInMemory-在内存中缓存的element的最大数目
+    maxELementsonDisk-在盛盘上缓存的element的最大数目，若是0表示无穷大
+    eternal  设定缓存的elements是否永远不过期
+    overflowToDisk  设定当缓存溢出的时候是否将过期的element缓存到磁盘上
+
+
+-->

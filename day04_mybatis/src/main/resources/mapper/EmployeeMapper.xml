@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.EmployeeMapper">
+
+<!--    <cache eviction="FIFO" flushInterval="60000" size="512"></cache>-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+    <!-- 提取重复的sql片段-->
+    <sql id="select_employee">
+        select
+            id,
+            last_name,
+            email,
+            salary
+        from
+            tbl_employee
+    </sql>
+    <sql id="emp_col">
+        id,
+        last_name,
+        email,
+        salary
+    </sql>
+
+    <!-- 按条件查询员工信息【条件不确定（employee）】 -->
+    <select id="selectEmployeeByOpr" resultType="employee">
+        <include refid="select_employee"></include>
+        <where>
+            <if test="id !=null" >
+                and id = #{id}
+            </if>
+            <if test="lastName !=null">
+                and last_name = #{lastName}
+            </if>
+            <if test="email !=null">
+                and email = #{email}
+            </if>
+            <if test="salary !=null">
+                and salary = #{salary}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectEmployeeByOprTrim" resultType="employee">
+        <include refid="select_employee"></include>
+
+        <!--  suffixOverrides去除and后缀 -->
+        <trim prefix="where" suffixOverrides="and">
+            <if test="id !=null" >
+                 id = #{id} and
+            </if>
+            <if test="lastName !=null">
+                 last_name = #{lastName} and
+            </if>
+            <if test="email !=null">
+                 email = #{email} and
+            </if>
+            <if test="salary !=null">
+                 salary = #{salary}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateEmpByOpr">
+        update
+            tbl_employee
+        <set>
+            <if test="lastName != null">
+                last_name=#{lastName},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="salary != null">
+                salary=#{salary},
+            </if>
+        </set>
+        where
+            id = #{id}
+    </update>
+
+    <select id="selectEmpByOneOpr" resultType="employee">
+        <include refid="select_employee"></include>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <when test="lastName != null">
+                    last_name = #{lastName}
+                </when>
+                <when test="email != null">
+                    email = #{email}
+                </when>
+                <when test="salary != null">
+                    salary = #{salary}
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="selectEmpByIds" resultType="employee">
+        select
+            <include refid="emp_col"></include>
+        from
+            tbl_employee
+        <where>
+            id in
+            (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </where>
+    </select>
+
+    <!-- 批量添加员工信息 -->
+    <insert id="batchInsertEmp">
+        INSERT INTO
+            tbl_employee(last_name,email,salary)
+        VALUES
+            <foreach collection="employees" item="emp" separator=",">
+                (#{emp.lastName},#{emp.email},#{emp.salary})
+            </foreach>
+    </insert>
+</mapper>

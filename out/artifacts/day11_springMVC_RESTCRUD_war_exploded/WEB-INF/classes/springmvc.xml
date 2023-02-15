@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 开启组件扫描 -->
+    <context:component-scan base-package="cn.itcast"></context:component-scan>
+<!--  装配视图解析器  -->
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="characterEncoding" value="UTF-8"></property>
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolvers">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <property name="prefix" value="/WEB-INF/pages/"></property>
+                        <property name="suffix" value=".html"></property>
+                        <property name="characterEncoding" value="UTF-8"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+<!--  装配首页控制器  -->
+    <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
+
+<!-- 防止DispatcherServlet与DefaultServlet的URL配置冲突(解决静态资源加载问题)  -->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+<!-- 解决控制器及态资源加载问题后续 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+</beans>

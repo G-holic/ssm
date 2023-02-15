@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    生命周期 -->
+    <bean id="student" class="cn.itcast.pojo.Student"
+            init-method="initStudent"
+            destroy-method="destroyStudent"
+    >
+        <property name="id" value="101"></property>
+        <property name="stuName" value="zhangsan"></property>
+    </bean>
+
+<!--  装配后置处理器  -->
+    <bean id="myPostProcessor" class="cn.itcast.processor.MyPostProcessor"></bean>
+ </beans>

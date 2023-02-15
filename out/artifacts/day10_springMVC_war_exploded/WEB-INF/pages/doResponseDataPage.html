@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>响应数据</title>
+</head>
+<body>
+
+<h2>测试响应数据</h2>
+<a th:href="@{/ResponseDataController/testMvResponseData}">ModelAndView处理响应数据</a>
+<br>
+<a th:href="@{/ResponseDataController/testModelOrModelMapOrMap}">Model处理响应数据</a>
+<br>
+<a th:href="@{/ResponseDataController/testSession}">测试响应数据-Session域</a>
+<br>
+<a th:href="@{/ResponseDataController/testSession2}">测试响应数据-Session2域</a>
+<br>
+<a th:href="@{/ResponseDataController/testRedirect}">测试重定向</a>
+<br>
+</body>
+</html>

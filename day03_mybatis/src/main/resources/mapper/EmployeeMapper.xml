@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.EmployeeMapper">
+
+    <!-- 自定义映射（员工与部门之间的关系）-->
+    <resultMap id="empAndDeptResultMap" type="employee">
+        <!-- 定义主键字段与属性的关联关系 -->
+        <id column="id" property="id"></id>
+        <!-- 定义非主键字段与属性的关联关系 -->
+        <result column="last_name" property="lastName"></result>
+        <result column="email" property="email"></result>
+        <result column="salary" property="salary"></result>
+        <!-- 为员工中所属部门，自定义关联关系-->
+        <result column="dept_id" property="dept.deptId"></result>  <!-- dept 是Employee类里面的属性-->
+        <result column="dept_Name" property="dept.deptName"></result>
+    </resultMap>
+
+    <select id="selectEmpAndDeptByEmpId" resultMap="empAndDeptResultMap">
+        SELECT
+            e.`id`,
+            e.`email`,
+            e.`last_name`,
+            e.`salary`,
+            d.`dept_id`,
+            d.`dept_name`
+        FROM
+            tbl_employee e,
+            tbl_dept d
+        WHERE
+            e.`dept_id` = d.`dept_id`
+        AND
+            e.`id`=#{empId}
+    </select>
+
+
+    <!-- 自定义映射（员工与部门之间的关系）-->
+    <resultMap id="empAndDeptResultMapAssociation" type="employee">
+        <!-- 定义主键字段与属性的关联关系 -->
+        <id column="id" property="id"></id>
+        <!-- 定义非主键字段与属性的关联关系 -->
+        <result column="last_name" property="lastName"></result>
+        <result column="email" property="email"></result>
+        <result column="salary" property="salary"></result>
+        <!-- 为员工中所属部门，自定义关联关系-->
+        <association property="dept"
+                    javaType="cn.itcast.mybatis.pojo.Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+    <select id="selectEmpAndDeptByEmpIdAssociation" resultMap="empAndDeptResultMapAssociation">
+        SELECT
+            e.`id`,
+            e.`email`,
+            e.`last_name`,
+            e.`salary`,
+            d.`dept_id`,
+            d.`dept_name`
+        FROM
+            tbl_employee e,
+            tbl_dept d
+        WHERE
+            e.`dept_id` = d.`dept_id`
+        AND
+            e.`id`=#{empId}
+    </select>
+
+    <resultMap id="empAndDepResultMapAssociationStep" type="employee">
+        <id property="id" column="id"></id>
+        <result property="lastName" column="last_name"></result>
+        <result property="email" column="email"></result>
+        <result property="salary" column="salary"></result>
+
+        <association property="dept"
+                    select="cn.itcast.mybatis.mapper.DeptMapper.selectDeptByDeptId"
+                    column="dept_id"
+                    fetchType="lazy">
+<!--            fetchType="lazy"  局部设置 -->
+        </association>
+    </resultMap>
+<!--    1.通过员工id获取员工信息【id、last_name、email、salary、dept_id】-->
+<!--    2.再通过部门id获取部门信息【dept_id、dept_name】-->
+    <select id="selectEmpAndDeptByEmpIdAssociationStep" resultMap="empAndDepResultMapAssociationStep">
+        select
+            id,
+            last_name,
+            email,
+            salary,
+            dept_id
+        from
+            tbl_employee
+        where
+            id=#{empId}
+    </select>
+
+
+    <!-- 通过部门id获取员工信息 -->
+    <select id="selectEmpByDeptId" resultType="employee">
+        select
+            id,
+            last_name,
+            email,
+            salary,
+            dept_id
+        from
+            tbl_employee
+        where
+            dept_id = #{dId}
+    </select>
+
+
+</mapper>

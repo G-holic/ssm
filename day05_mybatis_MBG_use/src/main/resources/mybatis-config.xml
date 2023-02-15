@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 加载外部属性文件 -->
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!-- 开启自动 驼峰命名自动映射 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启延迟加载 -->
+                <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 设置加载的数据是按需加载 3.4.2及以后的版本可以省略-->
+                <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- 设置类型别名 -->
+    <typeAliases>
+        <package name="cn.itcast.mybatis.pojo"/>
+    </typeAliases>
+
+    <!-- 添加分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    <!-- 设置数据库连接环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--                <property name="driver" value="${driver}"/>-->
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <!--    有警告      <property name="url" value="jdbc:mysql://localhost:3306/db20230112?serverTimezone=UTC"/>-->
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 设置映射文件的路径-->
+    <mappers>
+        <mapper resource="mapper/EmployeeMapper.xml"></mapper>
+<!--        <mapper resource="mapper/DeptMapper.xml"></mapper>-->
+    </mappers>
+</configuration>

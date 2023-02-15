@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>员工的列表页面</title>
+</head>
+<body>
+<div align="center">
+    <table border="1" width="600px" height="300px">
+        <tr>
+             <th>id</th>
+             <th>姓名</th>
+             <th>邮箱</th>
+             <th>薪水</th>
+        </tr>
+        <tr th:each="emp : ${emps}">
+            <td th:text="${emp.id}"></td>
+            <td th:text="${emp.lastName}"></td>
+            <td th:text="${emp.email}"></td>
+            <td th:text="${emp.salary}"></td>
+        </tr>
+    </table>
+    <span th:utext="${pageRs}"></span>
+</div>
+</body>
+</html>

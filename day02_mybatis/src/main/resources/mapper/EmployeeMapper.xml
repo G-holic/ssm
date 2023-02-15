@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.mybatis.mapper.EmployeeMapper">
+    <!--    <select id="selectEmpById" resultType="cn.itcast.mybatis.pojo.Employee">-->
+    <!-- 用别名 -->
+    <select id="selectEmpById" resultType="employee">
+        SELECT
+        id,
+        last_name,
+        email,
+        salary
+        FROM
+        tbl_employee
+        WHERE
+        id=#{empId}
+    </select>
+
+    <!-- 定义添加员工信息的SQL -->
+    <!-- useGeneratedKeys：启用主键生成策略 -->
+    <!-- keyProperty：设置存储属性值 -->
+    <insert id="insertEmployee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_employee(last_name,email,salary)
+        VALUES(#{lastName},#{email},#{salary})
+    </insert>
+
+    <!-- 定义删除员工信息的SQL -->
+    <delete id="deleteEmployeeById">
+        DELETE FROM
+            tbl_employee
+        WHERE
+            id=#{empId}
+    </delete>
+
+    <!-- 定义修改员工信息的SQL -->
+    <update id="updateEmployee">
+        update tbl_employee
+        set
+            last_name=#{lastName},
+            email=#{email},
+            salary=#{salary}
+        where
+            id=#{id}
+    </update>
+
+    <!-- 定义查询所有员工信息的SQL -->
+    <select id="selectAllEmps" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            tbl_employee
+    </select>
+
+    <!-- day03 -->
+    <!-- 参数传递 -->
+    <!-- 定义通过员工的姓名和薪资查询员工信息的SQL 多个普通参数-->
+    <select id="selectEmpByOpr" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            tbl_employee
+        WHERE
+            last_name=#{param1}
+        AND
+            salary=#{param2}
+    </select>
+
+    <!-- 定义通过员工的姓名和薪资查询员工信息的SQL Pojo参数-->
+    <select id="selectEmpByPojo" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            tbl_employee
+        WHERE
+            last_name=#{lastName}
+        AND
+            salary=#{salary}
+    </select>
+
+    <!-- 定义通过员工的姓名和薪资查询员工信息的SQL 命名参数 -->
+    <select id="selectEmpByNamed" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            tbl_employee
+        WHERE
+            last_name=#{lName}
+        AND
+            salary=#{salary}
+    </select>
+
+
+    <!-- 定义通过员工的姓名和薪资查询员工信息的SQL Map参数 -->
+    <select id="selectEmpByMap" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            tbl_employee
+        WHERE
+            last_name=#{lastName}
+        AND
+            salary=#{salary}
+    </select>
+
+    <!--  $使用 -->
+    <select id="selectEmpByDynamitTable" resultType="employee">
+        SELECT
+            id,
+            last_name,
+            email,
+            salary
+        FROM
+            ${tblName}
+    </select>
+
+    <!-- 查询单行数据返回Map集合 -->
+    <select id="selectEmpReturnMap" resultType="map">
+        select
+            id,
+            last_name,
+            email,
+            salary
+        from
+            tbl_employee
+        where
+            id=#{empId}
+    </select>
+    <!-- 查询多行数据返回Map -->
+    <select id="selectEmpsReturnMap" resultType="map">
+        select
+            id,
+            last_name,
+            email,
+            salary
+        from
+            tbl_employee
+    </select>
+</mapper>

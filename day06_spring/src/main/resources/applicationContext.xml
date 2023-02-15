@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 外部已声明bean-->
+    <bean id="dept1" class="cn.itcast.pojo.Dept">
+        <property name="deptId"  value="1"></property>
+        <property name="deptName" value="研发部"></property>
+    </bean>
+
+    <!-- 测试外部bean-->
+    <bean id="empChai" class="cn.itcast.pojo.Employee">
+        <property name="id" value="101"></property>
+        <property name="lastName" value="chai"></property>
+        <property name="email" value="264@163.com"></property>
+        <property name="salary" value="100.0"></property>
+
+        <property name="dept" ref="dept1"></property>
+        <!-- 注意：内部级联属性更改数值会影响外部已声明bean【ref赋值的是引用】 dept1 的deptName的值是财务部门-->
+        <property name="dept.deptName" value="财务部门"></property>
+    </bean>
+
+    <!-- 测试内部bean-->
+    <bean id="empXin" class="cn.itcast.pojo.Employee">
+        <property name="id" value="102"></property>
+        <property name="lastName" value="xx"></property>
+        <property name="email" value="xx@163.com"></property>
+        <property name="salary" value="105.0"></property>
+        <property name="dept">
+            <bean class="cn.itcast.pojo.Dept">
+                <property name="deptId" value="2"></property>
+                <property name="deptName" value="人事部"></property>
+            </bean>
+        </property>
+    </bean>
+
+
+
+    <!-- 测试集合-->
+    <bean id="dept3" class="cn.itcast.pojo.Dept">
+        <property name="deptId" value="3"></property>
+        <property name="deptName" value="程序员鼓励师"></property>
+        <property name="empList" >
+            <list>
+                <ref bean="empChai"></ref>
+                <ref bean="empXin"></ref>
+<!--                <bean></bean>-->
+            </list>
+        </property>
+    </bean>
+
+    <!-- 测试提取List-->
+    <util:list id="empList">
+        <ref bean="empChai"></ref>
+        <ref bean="empXin"></ref>
+    </util:list>
+    <bean id="dept4" class="cn.itcast.pojo.Dept">
+        <property name="deptId" value="4"></property>
+        <property name="deptName" value="运营部门"></property>
+        <property name="empList" ref="empList"></property>
+    </bean>
+
+    <!-- 测试Map-->
+    <bean id="dept5" class="cn.itcast.pojo.Dept">
+        <property name="deptId" value="5"></property>
+        <property name="deptName" value="采购部门"></property>
+        <property name="empMap">
+            <map>
+<!--                <entry key="empx" value-ref="empXin"></entry> 有问题-->
+<!--                <entry key="101" value-ref="empChai"></entry> 可以-->
+                <entry>
+                    <key>
+                        <value>101</value>
+                    </key>
+                    <!--                    <bean></bean>-->
+                    <ref bean="empChai"></ref>
+                </entry>
+                <entry>
+                    <key><value>102</value></key>
+                    <ref bean="empXin"></ref>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 测试提取Map-->
+    <util:map id="empMap">
+        <entry key="103" value-ref="empXin"></entry>
+    </util:map>
+    <bean id="dept6" class="cn.itcast.pojo.Dept">
+        <property name="deptId" value="6"></property>
+        <property name="deptName" value="行政部门"></property>
+        <property name="empMap" ref="empMap"></property>
+    </bean>
+</beans>

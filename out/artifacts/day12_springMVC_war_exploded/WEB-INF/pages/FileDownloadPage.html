@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件下载页面</title>
+</head>
+<body>
+<div align="center">
+    <h2>atitcast220106</h2>
+    <a th:href="@{/fileDownLoadController(filename = '222.png')}">222.png</a><br>
+    <a th:href="@{/fileDownLoadController(filename = '333.png')}">333.png</a><br>
+    <a th:href="@{/fileDownLoadController(filename = '05_Vue基础-v-model表单.pptx')}">05_Vue基础-v-model表单.pptx</a><br>
+    <a th:href="@{/fileDownLoadController(filename = '添加图书sql语句.txt')}">添加图书sql语句.txt</a>
+</div>
+</body>
+</html>
